@@ -1,0 +1,54 @@
+﻿@page "/students"
+@inject IStudentService studentService
+@inject NavigationManager navigationManager
+
+<PageTitle>Studenten</PageTitle>
+
+<h3>Studenten</h3>
+
+<table class="table">
+    <thead> 
+        <tr>
+            <th>Huidige klas</th>
+            <th>Voornaam</th>
+            <th>Familienaam</th>
+            <th>Geboortedatum</th>
+            <th>Alleen naar huis?</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in studentService.Students)
+        {
+            <tr>
+                <td>@student.ClassLevel</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@(student.BirthDate.HasValue ? student.BirthDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                <td>@(student.HomeAlone ? "Ja" : "Nee")</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(() => ShowStudent(student.Id))">
+                        <i class="oi oi-pencil"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary" @onclick="CreateNewStudent">Schrijf een nieuwe student in</button>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await studentService.GetStudents();
+    }
+
+    void ShowStudent(int id)
+    {
+        navigationManager.NavigateTo($"student/{id}");
+    }
+
+    void CreateNewStudent()
+    {
+        navigationManager.NavigateTo($"student");
+    }
+}
