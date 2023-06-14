@@ -23,7 +23,7 @@
                 <td>@student.ClassLevel</td>
                 <td>@student.FirstName</td>
                 <td>@student.LastName</td>
-                <td>@(student.BirthDate.HasValue ? student.BirthDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                <td>@student.BirthDate.ToString("yyyy-MM-dd")</td>
                 <td>@(student.HomeAlone ? "Ja" : "Nee")</td>
                 <td>
                     <button class="btn btn-primary" @onclick="(() => ShowStudent(student.Id))">

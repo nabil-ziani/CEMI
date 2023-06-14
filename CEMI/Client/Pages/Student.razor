@@ -13,20 +13,21 @@ else
     <h3>Bewerk @student.FirstName @student.LastName</h3>
 }
 
-<EditForm Model="student" OnSubmit="HandleSubmit">
+<EditForm Model="student" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
     <!-- voornaam, achternaam, geboortedatum -->
     <div class="row mt-4">
         <div class="form-group col-md-4">
-            <label for="firstname">Voornaam</label>
-            <InputText id="firstname" @bind-Value="student.FirstName" class="form-control"></InputText>
+            <label class="required" for="firstname">Voornaam</label>
+            <InputText id="firstname" @bind-Value="student.FirstName" class="form-control required"></InputText>
         </div>
         <div class="form-group col-md-4">
-            <label for="lastname">Familienaam</label>
+            <label class="required" for="lastname">Familienaam</label>
             <InputText id="lastname" @bind-Value="student.LastName" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="birthdate">Geboortedatum</label>
-            <InputDate  id="birthdate" @bind-Value="student.BirthDate" class="form-control"></InputDate>
+            <label class="required" for="birthdate">Geboortedatum</label>
+            <InputDate id="birthdate" @bind-Value="student.BirthDate" class="form-control"></InputDate>
         </div>
     </div>
     <!-- klas, telefoon1, telefoon2 -->
@@ -41,7 +42,7 @@ else
             </InputSelect>
         </div>
         <div class="form-group col-md-4">
-            <label for="phone1">Telefoon 1</label>
+            <label class="required" for="phone1">Telefoon 1</label>
             <InputText id="phone1" @bind-Value="student.Phone1" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-4">
@@ -52,53 +53,55 @@ else
     <!-- email1, email2, alleen naar huis? -->
     <div class="row mt-4">
         <div class="form-group col-md-4">
-            <label for="email1">E-mail 1</label>
+            <label class="required" for="email1">E-mail 1</label>
             <InputText id="email1" @bind-Value="student.Email1" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-4">
             <label for="email2">E-mail 2</label>
             <InputText id="email2" @bind-Value="student.Email2" class="form-control"></InputText>
         </div>
-        <div class="form-group col-md-2">
-            <label for="birthdate">Geboortedatum</label>
-            <InputCheckbox id="birthdate" @bind-Value="student.HomeAlone" class="form-control"></InputCheckbox>
+        <div class="form-group col-md-2 d-flex align-items-center">
+            <div>
+                <InputCheckbox id="homealone" @bind-Value="student.HomeAlone"></InputCheckbox>
+                <label for="homealone">Alleen naar huis?</label>
+            </div>
         </div>
     </div>
     <!-- Adres 1 -->
     <div class="row mt-4">
         <div class="form-group col-md-4">
-            <label for="street1">Straat</label>
+            <label class="required" for="street1">Straat 1</label>
             <InputText id="street1" @bind-Value="student.Street1" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="housenumber1">Huisnummer</label>
+            <label class="required" for="housenumber1">Huisnummer 1</label>
             <InputText id="housenumber1" @bind-Value="student.HouseNumber1" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="postalcode1">Postcode</label>
+            <label class="required" for="postalcode1">Postcode 1</label>
             <InputText id="postalcode1" @bind-Value="student.PostalCode1" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="district1">Gemeente</label>
+            <label class="required" for="district1">Gemeente 1</label>
             <InputText id="district1" @bind-Value="student.District1" class="form-control"></InputText>
         </div>
     </div>
     <!-- Adres 2 -->
     <div class="row mt-4">
         <div class="form-group col-md-4">
-            <label for="street2">Straat</label>
+            <label for="street2">Straat 2</label>
             <InputText id="street2" @bind-Value="student.Street2" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="housenumber2">Huisnummer</label>
+            <label for="housenumber2">Huisnummer 2</label>
             <InputText id="housenumber2" @bind-Value="student.HouseNumber2" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="postalcode2">Postcode</label>
+            <label for="postalcode2">Postcode 2</label>
             <InputText id="postalcode2" @bind-Value="student.PostalCode2" class="form-control"></InputText>
         </div>
         <div class="form-group col-md-2">
-            <label for="district2">Gemeente</label>
+            <label for="district2">Gemeente 2</label>
             <InputText id="district2" @bind-Value="student.District2" class="form-control"></InputText>
         </div>
     </div>
@@ -113,6 +116,7 @@ else
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
     <button type="button" class="btn btn-danger" @onclick="DeleteStudent">Verwijder student</button>
+    <ValidationSummary />
 </EditForm>
 
 @code {

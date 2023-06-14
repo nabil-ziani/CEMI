@@ -30,28 +30,54 @@ namespace CEMI.Shared
     {
         public int Id { get; set; }
         public ClassLevel? ClassLevel { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public string? Phone1 { get; set; }
+
+        [Required(ErrorMessage = "Voornaam is een verplicht veld.")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Familienaam is een verplicht veld.")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Geboortedatum is een verplicht veld.")]
+        public DateTime BirthDate { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "'Telefoon 1' is een verplicht veld.")]
+        public string Phone1 { get; set; } = string.Empty;
+
         public string? Phone2 { get; set; }
-        public string? Email1 { get; set; }
+
+        [Required(ErrorMessage = "'E-mail 1' is een verplicht veld.")]
+        public string Email1 { get; set; } = string.Empty;
+
         public string? Email2 { get; set; }
+
         public bool HomeAlone { get; set; } = false;
+
         public string? Remarks { get; set; }
 
         #region Address1 
-        public string? Street1 { get; set; }
-        public string? HouseNumber1 { get; set; }
-        public string? PostalCode1 { get; set; }
-        public string? District1 { get; set; }
+
+        [Required(ErrorMessage = "'Straat 1' is een verplicht veld.")]
+        public string Street1 { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "'Huisnummer 1' is een verplicht veld.")]
+        public string HouseNumber1 { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "'Postcode 1' is een verplicht veld.")]
+        public string PostalCode1 { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "'Gemeente 1' is een verplicht veld.")]
+        public string District1 { get; set; } = string.Empty;
+
         #endregion
 
         #region Address2
+
         public string? Street2 { get; set; }
         public string? HouseNumber2 { get; set; }
         public string? PostalCode2 { get; set; }
         public string? District2 { get; set; }
+
         #endregion
     }
 }
