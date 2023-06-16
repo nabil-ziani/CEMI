@@ -16,23 +16,20 @@ namespace CEMI.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClassLevel = table.Column<int>(type: "int", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Phone1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Phone1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HomeAlone = table.Column<bool>(type: "bit", nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HouseNumber1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HouseNumber2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District2 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Enrolled = table.Column<bool>(type: "bit", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

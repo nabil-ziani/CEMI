@@ -35,6 +35,8 @@ namespace CEMI.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<List<StudentModel>>> CreateStudent(StudentModel student)
         {
+            student.Enrolled = true;
+
             _dataContext.Students.Add(student);
             
             await _dataContext.SaveChangesAsync();
@@ -56,20 +58,16 @@ namespace CEMI.Server.Controllers
             dbStudent.LastName = student.LastName;
             dbStudent.BirthDate = student.BirthDate;
             dbStudent.ClassLevel = student.ClassLevel;
-            dbStudent.Phone1 = student.Phone1;
-            dbStudent.Phone2 = student.Phone2;
+            dbStudent.Phone_1 = student.Phone_1;
+            dbStudent.Phone_2 = student.Phone_2;
             dbStudent.Email1 = student.Email1;
             dbStudent.Email2 = student.Email2;
             dbStudent.HomeAlone = student.HomeAlone;
             dbStudent.Remarks = student.Remarks;
             dbStudent.Street1 = student.Street1;
-            dbStudent.Street2 = student.Street2;
             dbStudent.HouseNumber1 = student.HouseNumber1;
-            dbStudent.HouseNumber2 = student.HouseNumber2;
             dbStudent.PostalCode1 = student.PostalCode1;
-            dbStudent.PostalCode2 = student.PostalCode2;
             dbStudent.District1 = student.District1;
-            dbStudent.District2 = student.District2;
 
             await _dataContext.SaveChangesAsync();
 

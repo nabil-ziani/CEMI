@@ -1,12 +1,5 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-label.required {
-    content: "*";
-    color: red;
-    font-size: 20px;
-    margin-left: 5px;
-}
-
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

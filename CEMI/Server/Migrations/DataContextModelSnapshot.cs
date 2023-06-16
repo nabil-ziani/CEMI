@@ -30,58 +30,57 @@ namespace CEMI.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("BirthDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ClassLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("District1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("District2")
+                    b.Property<string>("District")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Enrolled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HomeAlone")
                         .HasColumnType("bit");
 
-                    b.Property<string>("HouseNumber1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HouseNumber2")
+                    b.Property<string>("HouseNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalCode1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode2")
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Street1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street2")
+                    b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

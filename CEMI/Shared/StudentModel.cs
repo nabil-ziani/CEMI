@@ -31,22 +31,22 @@ namespace CEMI.Shared
         public int Id { get; set; }
         public ClassLevel? ClassLevel { get; set; }
 
-        [Required(ErrorMessage = "Voornaam is een verplicht veld.")]
-        public string FirstName { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "Voornaam is een verplicht veld.")]
+        public string? FirstName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Familienaam is een verplicht veld.")]
-        public string LastName { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "Familienaam is een verplicht veld.")]
+        public string? LastName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Geboortedatum is een verplicht veld.")]
-        public DateTime BirthDate { get; set; } = DateTime.Now;
+        //[Required(ErrorMessage = "Geboortedatum is een verplicht veld.")]
+        public DateTime? BirthDate { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "'Telefoon 1' is een verplicht veld.")]
-        public string Phone1 { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "'Telefoon 1' is een verplicht veld.")]
+        public string? Phone_1 { get; set; } = string.Empty;
 
-        public string? Phone2 { get; set; }
+        public string? Phone_2 { get; set; }
 
-        [Required(ErrorMessage = "'E-mail 1' is een verplicht veld.")]
-        public string Email1 { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "'E-mail 1' is een verplicht veld.")]
+        public string? Email1 { get; set; } = string.Empty;
 
         public string? Email2 { get; set; }
 
@@ -54,29 +54,22 @@ namespace CEMI.Shared
 
         public string? Remarks { get; set; }
 
-        #region Address1 
+        public bool Enrolled { get; set; } = false;
 
-        [Required(ErrorMessage = "'Straat 1' is een verplicht veld.")]
-        public string Street1 { get; set; } = string.Empty;
+        #region Address 
 
-        [Required(ErrorMessage = "'Huisnummer 1' is een verplicht veld.")]
-        public string HouseNumber1 { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "Straat is een verplicht veld.")]
+        public string? Street1 { get; set; } = string.Empty;
+
+        //[Required(ErrorMessage = "Huisnummer is een verplicht veld.")]
+        public string? HouseNumber1 { get; set; } = string.Empty;
 
 
-        [Required(ErrorMessage = "'Postcode 1' is een verplicht veld.")]
-        public string PostalCode1 { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "Postcode is een verplicht veld.")]
+        public string? PostalCode1 { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "'Gemeente 1' is een verplicht veld.")]
-        public string District1 { get; set; } = string.Empty;
-
-        #endregion
-
-        #region Address2
-
-        public string? Street2 { get; set; }
-        public string? HouseNumber2 { get; set; }
-        public string? PostalCode2 { get; set; }
-        public string? District2 { get; set; }
+        //[Required(ErrorMessage = "Gemeente is een verplicht veld.")]
+        public string? District1 { get; set; } = string.Empty;
 
         #endregion
     }
