@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEMI.Server", "CEMI\Server\CEMI.Server.csproj", "{96232102-CDB0-4840-AF8D-74932116EC20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CEMI.Server", "CEMI\Server\CEMI.Server.csproj", "{96232102-CDB0-4840-AF8D-74932116EC20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEMI.Client", "CEMI\Client\CEMI.Client.csproj", "{4011375E-8FDE-4DB3-8CCC-BFD921CDF6EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CEMI.Client", "CEMI\Client\CEMI.Client.csproj", "{4011375E-8FDE-4DB3-8CCC-BFD921CDF6EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEMI.Shared", "CEMI\Shared\CEMI.Shared.csproj", "{6175DD9B-2DCE-4F33-82D4-1D1E2B785608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CEMI.Shared", "CEMI\Shared\CEMI.Shared.csproj", "{6175DD9B-2DCE-4F33-82D4-1D1E2B785608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

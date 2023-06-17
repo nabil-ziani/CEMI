@@ -1,17 +1,87 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
+<MudThemeProvider Theme="_currentTheme" />
+<MudDialogProvider FullWidth="true" MaxWidth="@MaxWidth.ExtraSmall" />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="25">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudText Typo="Typo.h5">CEMI</MudText>
+        </MudHidden>
+
+        <MudSpacer />
+
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudTooltip Text="Toggle light/dark theme">
+                <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
+            </MudTooltip>
+        </MudHidden>
+
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.TopRight">
+                <div class="px-2">
+                    <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
+                </div>
+            </MudMenu>
+        </MudHidden>
+        
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudImage Src="images/logo.png" Alt="CEMI logo" Class="cemi-logo" Height="50" />
+        </MudDrawerHeader>
         <NavMenu />
-    </div>
+    </MudDrawer>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    protected override void OnInitialized()
+    {
+        _currentTheme = _defaultTheme;
+    }
+
+    #region Theme
+    private void DarkMode()
+    {
+        if (_currentTheme == _defaultTheme)
+        {
+            _currentTheme = _lightTheme;
+        }
+        else
+        {
+            _currentTheme = _defaultTheme;
+        }
+    }
+
+    private MudTheme _currentTheme = new MudTheme();
+
+    private readonly MudTheme _defaultTheme =
+        new MudTheme()
+            {
+                Palette = new PaletteDark()
+            };
+
+    private readonly MudTheme _lightTheme =
+        new MudTheme()
+            {
+                Palette = new PaletteLight()
+            };
+    #endregion
+}
