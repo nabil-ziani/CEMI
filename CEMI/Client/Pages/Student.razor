@@ -1,6 +1,7 @@
 ﻿@page "/student"
 @page "/student/{id:int}"
 @inject IStudentService studentService
+@inject NavigationManager navigationManager
 
 @if(Id == null)
 {
@@ -29,7 +30,9 @@ else
         </MudItem>
 
         <MudItem>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(async () => await Submit())">Broer/zus inschrijven</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(() => {
+                navigationManager.NavigateTo($"student/?siblingid={Id}");
+            })">Broer/zus inschrijven</MudButton>
         </MudItem>
     </MudContainer>
 }
@@ -58,13 +61,13 @@ else
                 <!-- voornaam, achternaam, geboortedatum -->
                 <MudGrid Class="d-flex justify-space-between my-3">
                     <MudItem xs="4">
-                        <MudTextField Required="true" @bind-Value="student.FirstName" For="@(() => student.FirstName)" Label="Voornaam" />
+                        <MudTextField Required="true" @bind-Value="student.FirstName" For="@(() => student.FirstName)" Label="Voornaam" OnlyValidateIfDirty="false" />
                     </MudItem>
                     <MudItem xs="4">
                         <MudTextField Required="true" @bind-Value="student.LastName" For="@(() => student.LastName)" Label="Familienaam" />
                     </MudItem>
                     <MudItem xs="3">
-                        <MudDatePicker Required="true" @bind-Date="student.BirthDate" For="(() => student.BirthDate)" DisableToolbar="true" Label="Geboortedatum" />
+                        <MudDatePicker Required="true" Editable="true" Mask="@(new DateMask("dd-MM-yyyy"))" HelperText="XX-XX-XXXX" HelperTextOnFocus="true" @bind-Date="student.BirthDate" For="(() => student.BirthDate)" DisableToolbar="true" Label="Geboortedatum" />
                     </MudItem>
                 </MudGrid>
 
@@ -79,10 +82,10 @@ else
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="4">
-                        <MudTextField Required="true" @bind-Value="student.Phone_1" For="@(() => student.Phone_1)" Label="Telefoon 1" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="04 XX XX XX XX" HelperTextOnFocus="true" />
+                        <MudTextField Required="true" @bind-Value="student.Phone_1" For="@(() => student.Phone_1)" Label="Telefoon 1" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="XX XX XX XX XX" HelperTextOnFocus="true" />
                     </MudItem>
                     <MudItem xs="4">
-                        <MudTextField @bind-Value="student.Phone_2" For="@(() => student.Phone_2)" Label="Telefoon 2" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="04 XX XX XX XX" HelperTextOnFocus="true" />
+                        <MudTextField @bind-Value="student.Phone_2" For="@(() => student.Phone_2)" Label="Telefoon 2" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="XX XX XX XX XX" HelperTextOnFocus="true" />
                     </MudItem>
                 </MudGrid>
 
@@ -140,21 +143,13 @@ else
     [Parameter]
     public int? Id { get; set; }
 
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "siblingid")]
+    public int? SiblingId { get; set; }
+
     string btnText = string.Empty;
 
     StudentModel student = new StudentModel();
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Id == null)
-        {
-            btnText = "Inschrijven";
-        } 
-        else
-        {
-            btnText = student.Enrolled ? "Bewerken" : "Herinschrijven";
-        }
-    }
 
     void OngraduationResult(StudentModel student, bool passed)
     {
@@ -175,10 +170,28 @@ else
         if (Id == null)
         {
             student.ClassLevel = ClassLevel.Tamhidi;
+            if (SiblingId != null)
+            {
+                var sibling = await studentService.GetSingleStudent((int)SiblingId);
+                student = new StudentModel
+                {
+                    LastName = sibling.LastName,
+                    Email1 = sibling.Email1,
+                    Email2 = sibling.Email2,
+                    Phone_1 = sibling.Phone_1,
+                    Phone_2 = sibling.Phone_2,
+                    Street1 = sibling.Street1,
+                    HouseNumber1 = sibling.HouseNumber1,
+                    PostalCode1 = sibling.PostalCode1,
+                    District1 = sibling.District1
+                };
+            }
+            btnText = "Inschrijven";
         }
         else
         {
             student = await studentService.GetSingleStudent((int)Id);
+            btnText = student.Enrolled ? "Bewerken" : "Herinschrijven";
         }
     }
 

@@ -38,7 +38,7 @@ namespace CEMI.Shared
 
         public string? LastName { get; set; } = string.Empty;
 
-        public DateTime? BirthDate { get; set; } = DateTime.Now;
+        public DateTime? BirthDate { get; set; } = null;
 
         public string? Phone_1 { get; set; } = string.Empty;
 

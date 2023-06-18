@@ -25,7 +25,7 @@
         <MudTd DataLabel="ClassLevel">@context.ClassLevel.GetDisplayName()</MudTd>
         <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
         <MudTd DataLabel="LastName">@context.LastName</MudTd>
-        <MudTd DataLabel="BirthDate">@(context.BirthDate != null ? context.BirthDate.Value.ToString("yyyy-MM-dd") : "")</MudTd>
+        <MudTd DataLabel="BirthDate">@(context.BirthDate != null ? context.BirthDate.Value.ToString("dd-MM-yyyy") : "")</MudTd>
         <MudTd DataLabel="Phone_1">@context.Phone_1</MudTd>
         <MudTd DataLabel="HomeAlone">@(context.HomeAlone ? "Ja" : "Nee")</MudTd>
         <MudTd>
