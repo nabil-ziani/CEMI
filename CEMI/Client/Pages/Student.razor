@@ -5,110 +5,138 @@
 @if(Id == null)
 {
     <PageTitle>Inschrijven</PageTitle>
-    <h3>Schrijf een nieuwe student in</h3>
+
+    <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="mb-3">
+        <MudText Typo="Typo.h5">Nieuwe student inschrijven</MudText>
+    </MudContainer>
 }
 else
 {
     <PageTitle>Bewerken</PageTitle>
-    <h3>Bewerk @student.FirstName @student.LastName</h3>
-    if (!student.Enrolled)
-    {
-        <span class="badge bg-danger">Niet ingeschreven</span>
-    }
-    else
-    {
-        <span class="badge bg-success">Ingeschreven</span>
-    }
+
+    <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="d-flex justify-space-between mb-3">
+        <MudItem Class="d-flex justify-start align-center">
+            <MudText Typo="Typo.h5">@student.FirstName @student.LastName</MudText>
+
+            @if (!student.Enrolled)
+            {
+                <MudChip Class="ml-2" Size="Size.Small" Color="Color.Error">Niet ingeschreven</MudChip>
+            }
+            else
+            {
+                <MudChip Class="ml-2" Size="Size.Small" Color="Color.Success">Ingeschreven</MudChip>
+            }
+        </MudItem>
+
+        <MudItem>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(async () => await Submit())">Broer/zus inschrijven</MudButton>
+        </MudItem>
+    </MudContainer>
 }
 
-<EditForm Model="student" OnValidSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <!-- voornaam, achternaam, geboortedatum -->
-    <div class="row mt-4">
-        <div class="form-group col-md-4">
-            <label for="firstname">Voornaam</label>
-            <InputText id="firstname" @bind-Value="student.FirstName" class="form-control required"></InputText>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="lastname">Familienaam</label>
-            <InputText id="lastname" @bind-Value="student.LastName" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="birthdate">Geboortedatum</label>
-            <InputDate id="birthdate" @bind-Value="student.BirthDate" class="form-control"></InputDate>
-        </div>
-    </div>
-    <!-- klas, telefoon1, telefoon2 -->
-    <div class="row mt-4">
-        <div class="form-group col-md-2">
-            <label for="class">Klas 2022-2023</label>
-            <InputSelect id="class " @bind-Value="student.ClassLevel" class="form-control">
-                @foreach (var level in Enum.GetValues(typeof(ClassLevel)))
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudCard>
+        <MudForm Model="@student" @ref="@form" Validation="@(studentValidator.ValidateValue)" ValidationDelay="0">
+            <MudCardContent>
+                @if (student.OldStudent)
                 {
-                    <option value="@level">@level</option>
+                    <MudGrid>
+                        <MudItem>
+                            <MudAlert Severity="MudBlazor.Severity.Info" Variant="Variant.Filled">Gelieve aan te geven of @student.FirstName geslaagd is:</MudAlert>
+                        </MudItem>
+                        <MudItem Class="d-flex align-center">
+                            <MudSwitch Checked="student.Graduated"
+                                       CheckedChanged="(bool result) => OngraduationResult(student, result)"
+                                       ThumbIcon="@(student.Graduated == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                       ThumbIconColor="@(student.Graduated == true ? Color.Success : Color.Error)">
+                                Geslaagd
+                            </MudSwitch>
+                        </MudItem>
+                    </MudGrid>
                 }
-            </InputSelect>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="phone1">Telefoon 1</label>
-            <InputText id="phone1" @bind-Value="student.Phone_1" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="phone2">Telefoon 2</label>
-            <InputText id="phone2" @bind-Value="student.Phone_2" class="form-control"></InputText>
-        </div>
-    </div>
-    <!-- email1, email2, alleen naar huis? -->
-    <div class="row mt-4">
-        <div class="form-group col-md-4">
-            <label for="email1">E-mail 1</label>
-            <InputText id="email1" @bind-Value="student.Email1" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="email2">E-mail 2</label>
-            <InputText id="email2" @bind-Value="student.Email2" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-2 d-flex align-items-center">
-            <div>
-                <InputCheckbox id="homealone" @bind-Value="student.HomeAlone"></InputCheckbox>
-                <label for="homealone">Alleen naar huis?</label>
-            </div>
-        </div>
-    </div>
-    <!-- Adres -->
-    <div class="row mt-4">
-        <div class="form-group col-md-4">
-            <label for="street">Straat</label>
-            <InputText id="street" @bind-Value="student.Street1" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="housenumber">Huisnummer</label>
-            <InputText id="housenumber" @bind-Value="student.HouseNumber1" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="postalcode">Postcode</label>
-            <InputText id="postalcode" @bind-Value="student.PostalCode1" class="form-control"></InputText>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="district">Gemeente</label>
-            <InputText id="district" @bind-Value="student.District1" class="form-control"></InputText>
-        </div>
-    </div>
 
-    <!-- Opmerkingen? -->
-    <div class="row mt-4">
-        <div class="form-group col-md-10">
-            <label for="remarks">Opmerkingen</label>
-            <InputTextArea id="remarks" @bind-Value="student.Remarks" class="form-control"></InputTextArea>
-        </div>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">@btnText</button>
-    <button type="button" class="btn btn-danger" @onclick="DeleteStudent">Verwijder student</button>
-    <ValidationSummary />
-</EditForm>
+                <!-- voornaam, achternaam, geboortedatum -->
+                <MudGrid Class="d-flex justify-space-between my-3">
+                    <MudItem xs="4">
+                        <MudTextField Required="true" @bind-Value="student.FirstName" For="@(() => student.FirstName)" Label="Voornaam" />
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField Required="true" @bind-Value="student.LastName" For="@(() => student.LastName)" Label="Familienaam" />
+                    </MudItem>
+                    <MudItem xs="3">
+                        <MudDatePicker Required="true" @bind-Date="student.BirthDate" For="(() => student.BirthDate)" DisableToolbar="true" Label="Geboortedatum" />
+                    </MudItem>
+                </MudGrid>
+
+                <!-- niveau, telefoon1, telefoon2 -->
+                <MudGrid Class="d-flex justify-space-between my-3">
+                    <MudItem xs="3">
+                        <MudSelect Required="true" @bind-Value="student.ClassLevel" T="ClassLevel" Label="Klas 2022-2023" AnchorOrigin="Origin.BottomCenter">
+                            @foreach (ClassLevel level in Enum.GetValues(typeof(ClassLevel)))
+                            {
+                                <MudSelectItem T="ClassLevel" Value="@level">@level.GetDisplayName()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField Required="true" @bind-Value="student.Phone_1" For="@(() => student.Phone_1)" Label="Telefoon 1" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="04 XX XX XX XX" HelperTextOnFocus="true" />
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField @bind-Value="student.Phone_2" For="@(() => student.Phone_2)" Label="Telefoon 2" Mask="@(new PatternMask("00 00 00 00 00"))" HelperText="04 XX XX XX XX" HelperTextOnFocus="true" />
+                    </MudItem>
+                </MudGrid>
+
+                <!-- email1, email2, homeAlone? -->
+                <MudGrid Class="d-flex justify-space-between my-3">
+                    <MudItem xs="4">
+                        <MudTextField Required="true" @bind-Value="student.Email1" For="(() => student.Email1)" Label="E-mailadres 1"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField @bind-Value="student.Email2" For="(() => student.Email2)" Label="E-mailadres 2"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="2">
+                        <MudCheckBox @bind-Checked="@student.HomeAlone" Color="Color.Primary" For="(() => student.HomeAlone)" Label="Alleen naar huis?"></MudCheckBox>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- adres -->
+                <MudGrid Class="d-flex justify-space-between my-3">
+                    <MudItem xs="4">
+                        <MudTextField Required="true" @bind-Value="student.Street1" For="(() => student.Street1)" Label="Straat"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="1">
+                        <MudTextField Required="true" @bind-Value="student.HouseNumber1" For="(() => student.HouseNumber1)" Label="Huisnummer"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="1">
+                        <MudTextField Required="true" @bind-Value="student.PostalCode1" For="(() => student.PostalCode1)" Label="Postcode"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="3">
+                        <MudTextField Required="true" @bind-Value="student.District1" For="(() => student.District1)" Label="Gemeente"></MudTextField>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Opmerkingen -->
+                <MudItem xs="12">
+                    <MudTextField T="string" Label="Opmerkingen" For="(() => student.Remarks)" Text="" Lines="3" />
+                </MudItem>
+            </MudCardContent>
+
+        </MudForm>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(async () => await Submit())">@btnText</MudButton>
+            @if (Id != null)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Error" Class="my-3" OnClick="@(async () => await DeleteStudent())">Verwijder</MudButton>
+            }
+        </MudCardActions>
+    </MudCard>
+</MudContainer>
+
 
 @code {
+    [Inject] private IDialogService DialogService { get; set; }
+    MudForm form;
+
     [Parameter]
     public int? Id { get; set; }
 
@@ -116,7 +144,31 @@ else
 
     StudentModel student = new StudentModel();
 
-    protected override async Task OnInitializedAsync() => btnText = (Id == null || !student.Enrolled) ? "Inschrijven" : "Bewerk";
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            btnText = "Inschrijven";
+        } 
+        else
+        {
+            btnText = student.Enrolled ? "Bewerken" : "Herinschrijven";
+        }
+    }
+
+    void OngraduationResult(StudentModel student, bool passed)
+    {
+        student.Graduated = passed;
+
+        if (passed)
+        {
+            student.ClassLevel = student.ClassLevel.Next();
+        } 
+        else
+        {
+            student.ClassLevel = student.ClassLevel.Previous();
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -127,24 +179,83 @@ else
         else
         {
             student = await studentService.GetSingleStudent((int)Id);
-
         }
     }
 
-    async Task HandleSubmit()
+    private async Task Submit()
     {
-        if(Id == null)
+        await form.Validate();
+
+        if (form.IsValid)
         {
-            await studentService.CreateStudent(student);
-        } 
-        else
-        {
-            await studentService.UpdateStudent(student);    
+            if (Id == null)
+            {
+                await studentService.CreateStudent(student);
+            }
+            else
+            {
+                await studentService.UpdateStudent(student);
+            }
         }
     }
 
     async Task DeleteStudent()
     {
+        bool? result = await DialogService.ShowMessageBox("Opgelet!", "Verwijderen kan niet ongedaan gemaakt worden!", yesText: "Verwijder", cancelText: "Annuleer");
+        StateHasChanged();
+
         await studentService.DeleteStudent(student.Id);
+    }
+
+    // Validation
+    StudentModelFluentValidator studentValidator = new StudentModelFluentValidator();
+
+    /// <summary>
+    /// A standard AbstractValidator which contains multiple rules and can be shared with the back end API
+    /// </summary>
+    /// <typeparam name="StudentModel"></typeparam>
+    public class StudentModelFluentValidator : AbstractValidator<StudentModel>
+    {
+        public StudentModelFluentValidator()
+        {
+            RuleFor(x => x.FirstName)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.LastName)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.BirthDate)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.Phone_1)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.Email1)
+                .NotEmpty().WithMessage("Dit veld is verplicht")
+                .EmailAddress().WithMessage("Dit is geen geldig e-mailadres");
+
+            RuleFor(x => x.ClassLevel.ToString())
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.Street1)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.HouseNumber1)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+
+            RuleFor(x => x.PostalCode1)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+            
+            RuleFor(x => x.District1)
+                .NotEmpty().WithMessage("Dit veld is verplicht.");
+        }
+
+        public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+        {
+            var result = await ValidateAsync(ValidationContext<StudentModel>.CreateWithOptions((StudentModel)model, x => x.IncludeProperties(propertyName)));
+            if (result.IsValid)
+                return Array.Empty<string>();
+            return result.Errors.Select(e => e.ErrorMessage);
+        };
     }
 }

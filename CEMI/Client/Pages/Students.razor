@@ -1,5 +1,4 @@
 ﻿@page "/students"
-@using CEMI.Client.Extensions;
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IStudentService studentService
@@ -7,25 +6,27 @@
 
 <PageTitle>Studenten</PageTitle>
 
-<MudTable @ref="_table" Items="@studentService.Students" Hover="true" Loading="@_loading" LoadingProgressColor="Color.Primary" Filter="new Func<StudentModel, bool>(FilterFunc1)" @bind-SelectedItem="selectedStudent">
+<MudTable @ref="_table" Items="@studentService.Students" Hover="true" Loading="@_loading" LoadingProgressColor="Color.Primary" Filter="new Func<StudentModel, bool>(FilterFunc1)" @bind-SelectedItem="selectedStudent" >
     <ToolBarContent>
         <MudText Typo="Typo.h5">Studenten</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString1" Placeholder="Zoeken" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Klas 2022-2023</MudTh>
         <MudTh>Voornaam</MudTh>
         <MudTh>Familienaam</MudTh>
         <MudTh>Geboortedatum</MudTh>
+        <MudTh>Telefoon 1</MudTh>
         <MudTh>Alleen naar huis?</MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ClassLevel">@context.ClassLevel!.GetDisplayName()</MudTd>
+        <MudTd DataLabel="ClassLevel">@context.ClassLevel.GetDisplayName()</MudTd>
         <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
         <MudTd DataLabel="LastName">@context.LastName</MudTd>
         <MudTd DataLabel="BirthDate">@(context.BirthDate != null ? context.BirthDate.Value.ToString("yyyy-MM-dd") : "")</MudTd>
+        <MudTd DataLabel="Phone_1">@context.Phone_1</MudTd>
         <MudTd DataLabel="HomeAlone">@(context.HomeAlone ? "Ja" : "Nee")</MudTd>
         <MudTd>
             <MudIconButton OnClick="(() => ShowStudent(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="@Color.Primary" Variant="@Variant.Filled"></MudIconButton>
@@ -54,7 +55,7 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (student.ClassLevel!.GetDisplayName()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (student.ClassLevel.GetDisplayName()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (student.FirstName!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
