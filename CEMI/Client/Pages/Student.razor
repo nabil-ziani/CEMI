@@ -61,7 +61,7 @@ else
                 <!-- voornaam, achternaam, geboortedatum -->
                 <MudGrid Class="d-flex justify-space-between my-3">
                     <MudItem xs="4">
-                        <MudTextField Required="true" @bind-Value="student.FirstName" For="@(() => student.FirstName)" Label="Voornaam" OnlyValidateIfDirty="false" />
+                        <MudTextField Required="true" @bind-Value="student.FirstName" For="@(() => student.FirstName)" Label="Voornaam" />
                     </MudItem>
                     <MudItem xs="4">
                         <MudTextField Required="true" @bind-Value="student.LastName" For="@(() => student.LastName)" Label="Familienaam" />
