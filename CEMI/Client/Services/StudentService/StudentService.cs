@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
 
 namespace CEMI.Client.Services.StudentService
 {
@@ -7,11 +6,13 @@ namespace CEMI.Client.Services.StudentService
     {
         private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
+        private readonly Supabase.Client _supabase;
 
-        public StudentService(HttpClient httpClient, NavigationManager navigationManager)
+        public StudentService(HttpClient httpClient, NavigationManager navigationManager, Supabase.Client client)
         {
             _httpClient = httpClient;
             _navigationManager = navigationManager;
+            _supabase = client;
         }
 
         public List<StudentModel> Students { get; set; } = new List<StudentModel>();
@@ -19,47 +20,72 @@ namespace CEMI.Client.Services.StudentService
         // GET
         public async Task GetStudents()
         {
-            var result = await _httpClient.GetFromJsonAsync<List<StudentModel>>("api/student");
+            var result = await _supabase.From<StudentModel>().Get();
+            var students = result.Models;
 
             if (result != null)
-                Students = result;
+                Students = students;
         }
 
         public async Task<StudentModel> GetSingleStudent(int id)
         {
-            var result = await _httpClient.GetFromJsonAsync<StudentModel>($"api/student/{id}");
+            var result = await _supabase.From<StudentModel>().Where(x => x.Id == id).Single();   
 
             if (result != null)
                 return result;
 
-            throw new Exception("Student niet gevonden!");
+            throw new Exception("Geen student gevonden.");
         }
 
         // POST
         public async Task CreateStudent(StudentModel student)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/student", student);
-            await SetStudents(result);
+            await _supabase.From<StudentModel>().Insert(student);
+            await SetStudents();
         }
 
         // PUT
         public async Task UpdateStudent(StudentModel student)
         {
-            var result = await _httpClient.PutAsJsonAsync($"api/student/{student.Id}", student);
-            await SetStudents(result);
+            var model = await _supabase
+                .From<StudentModel>()
+                .Where(x => x.Id == student.Id)
+                .Single() ?? throw new Exception("Geen student gevonden.");
+
+            model.FirstName = student.FirstName;
+            model.LastName = student.LastName;
+            model.ClassLevel = student.ClassLevel;
+            model.BirthDate = student.BirthDate;
+            model.Phone_1 = student.Phone_1;
+            model.Phone_2 = student.Phone_2;
+            model.Email1 = student.Email1;
+            model.Email2 = student.Email2;
+            model.HomeAlone = student.HomeAlone;
+            model.Remarks = student.Remarks;
+            model.Enrolled = student.Enrolled;
+            model.Graduated = student.Graduated;
+            model.Street = student.Street;
+            model.HouseNumber = student.HouseNumber;
+            model.PostalCode = student.PostalCode;
+            model.District = student.District;
+
+            await model.Update<StudentModel>();
+            await SetStudents();
         }
 
         // DELETE
         public async Task DeleteStudent(int id)
         {
-            var result = await _httpClient.DeleteAsync($"api/student/{id}");
-            await SetStudents(result);
+            await _supabase.From<StudentModel>().Where(x => x.Id == id).Delete();
+
+            await SetStudents();
         }
 
-        private async Task SetStudents(HttpResponseMessage result)
+        private async Task SetStudents()
         {
-            var response = await result.Content.ReadFromJsonAsync<List<StudentModel>>();
-            Students = response;
+            var result = await _supabase.From<StudentModel>().Get();
+            Students = result.Models;
+
             _navigationManager.NavigateTo("students");
         }
     }

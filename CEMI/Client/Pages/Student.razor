@@ -105,16 +105,16 @@ else
                 <!-- adres -->
                 <MudGrid Class="d-flex justify-space-between my-3">
                     <MudItem xs="4">
-                        <MudTextField Required="true" @bind-Value="student.Street1" For="(() => student.Street1)" Label="Straat"></MudTextField>
+                        <MudTextField Required="true" @bind-Value="student.Street" For="(() => student.Street)" Label="Straat"></MudTextField>
                     </MudItem>
                     <MudItem xs="1">
-                        <MudTextField Required="true" @bind-Value="student.HouseNumber1" For="(() => student.HouseNumber1)" Label="Huisnummer"></MudTextField>
+                        <MudTextField Required="true" @bind-Value="student.HouseNumber" For="(() => student.HouseNumber)" Label="Huisnummer"></MudTextField>
                     </MudItem>
                     <MudItem xs="1">
-                        <MudTextField Required="true" @bind-Value="student.PostalCode1" For="(() => student.PostalCode1)" Label="Postcode"></MudTextField>
+                        <MudTextField Required="true" @bind-Value="student.PostalCode" For="(() => student.PostalCode)" Label="Postcode"></MudTextField>
                     </MudItem>
                     <MudItem xs="3">
-                        <MudTextField Required="true" @bind-Value="student.District1" For="(() => student.District1)" Label="Gemeente"></MudTextField>
+                        <MudTextField Required="true" @bind-Value="student.District" For="(() => student.District)" Label="Gemeente"></MudTextField>
                     </MudItem>
                 </MudGrid>
 
@@ -180,10 +180,10 @@ else
                     Email2 = sibling.Email2,
                     Phone_1 = sibling.Phone_1,
                     Phone_2 = sibling.Phone_2,
-                    Street1 = sibling.Street1,
-                    HouseNumber1 = sibling.HouseNumber1,
-                    PostalCode1 = sibling.PostalCode1,
-                    District1 = sibling.District1
+                    Street = sibling.Street,
+                    HouseNumber = sibling.HouseNumber,
+                    PostalCode = sibling.PostalCode,
+                    District = sibling.District
                 };
             }
             btnText = "Inschrijven";
@@ -250,16 +250,16 @@ else
             RuleFor(x => x.ClassLevel.ToString())
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
 
-            RuleFor(x => x.Street1)
+            RuleFor(x => x.Street)
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
 
-            RuleFor(x => x.HouseNumber1)
+            RuleFor(x => x.HouseNumber)
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
 
-            RuleFor(x => x.PostalCode1)
+            RuleFor(x => x.PostalCode)
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
             
-            RuleFor(x => x.District1)
+            RuleFor(x => x.District)
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
         }
 
