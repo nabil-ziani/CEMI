@@ -39,11 +39,30 @@ namespace CEMI.Client.Services.StudentService
         public async Task CreateStudent(StudentModel student)
         {
             // IMPORTANT to store dates in UTC-format!
-            student.BirthDate = student.BirthDate!.Value.ToUniversalTime();
+            var newStudent = new CreateStudent
+            {
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                BirthDate = student.BirthDate!.Value.ToUniversalTime(),
+                ClassLevel = student.ClassLevel,
+                Enrolled = student.Enrolled,
+                OldStudent = student.OldStudent,
+                Graduated = student.Graduated,
+                Phone_1 = student.Phone_1,
+                Phone_2 = student.Phone_2,
+                Email1 = student.Email1,
+                Email2 = student.Email2,
+                Street = student.Street,
+                District = student.District,
+                PostalCode = student.PostalCode,
+                HouseNumber = student.HouseNumber,
+                HomeAlone = student.HomeAlone,
+                Remarks = student.Remarks
+            };
 
             // TODO: bool Enrolled should be set manually after payment is confirmed, so to be refactored...
             student.Enrolled = true;
-            await _supabase.From<StudentModel>().Insert(student);
+            await _supabase.From<CreateStudent>().Insert(newStudent);
             NavigateToOverview();
         }
 
@@ -86,7 +105,7 @@ namespace CEMI.Client.Services.StudentService
 
         private void NavigateToOverview()
         {
-            _navigationManager.NavigateTo("/students");
+            _navigationManager.NavigateTo("/students", true);
         }
     }
 }
