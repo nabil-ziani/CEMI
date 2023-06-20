@@ -39,7 +39,7 @@ else
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
     <MudCard>
-        <MudForm Model="@student" @ref="@form" Validation="@(studentValidator.ValidateValue)" ValidationDelay="0" name="@formName" data-netlify="true">
+        <MudForm Model="@student" @ref="@form" Validation="@(studentValidator.ValidateValue)" ValidationDelay="0" name="@formName" netlify>
             <MudCardContent>
                 @if (student.OldStudent)
                 {
@@ -189,13 +189,13 @@ else
                 };
             }
             btnText = "Inschrijven";
-            formName = "Enroll";
+            formName = "enrollForm";
         }
         else
         {
             student = await studentService.GetSingleStudent((int)Id);
             btnText = student.Enrolled ? "Bewerken" : "Herinschrijven";
-            formName = student.Enrolled ? "Update" : "EnrollAgain";
+            formName = student.Enrolled ? "updateForm" : "enrollAgainForm";
         }
     }
 
