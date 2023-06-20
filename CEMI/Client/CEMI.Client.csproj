@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Shared\CEMI.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-  </ItemGroup>
-
 </Project>

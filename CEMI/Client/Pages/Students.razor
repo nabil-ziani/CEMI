@@ -6,7 +6,7 @@
 
 <PageTitle>Studenten</PageTitle>
 
-<MudTable @ref="_table" Items="@studentService.Students" Hover="true" Loading="@_loading" LoadingProgressColor="Color.Primary" Filter="new Func<StudentModel, bool>(FilterFunc1)" @bind-SelectedItem="selectedStudent" >
+<MudTable @ref="_table" Items="@studentService.Students" Hover="true" Filter="new Func<StudentModel, bool>(FilterFunc1)" @bind-SelectedItem="selectedStudent" >
     <ToolBarContent>
         <MudText Typo="Typo.h5">Studenten</MudText>
         <MudSpacer />
@@ -43,7 +43,6 @@
 
 @code {
     private MudTable<StudentModel> _table;
-    private bool _loading = true;
     private string searchString1 = "";
     private StudentModel? selectedStudent = null;
 
@@ -62,12 +61,6 @@
         if (student.LastName!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await studentService.GetStudents();
-        _loading = false;
     }
 
     void ShowStudent(int id)

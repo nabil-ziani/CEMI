@@ -31,7 +31,7 @@ else
 
         <MudItem>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(() => {
-                navigationManager.NavigateTo($"student/?siblingid={Id}");
+                navigationManager.NavigateTo($"/student/?siblingid={Id}");
             })">Broer/zus inschrijven</MudButton>
         </MudItem>
     </MudContainer>
@@ -67,7 +67,7 @@ else
                         <MudTextField Required="true" @bind-Value="student.LastName" For="@(() => student.LastName)" Label="Familienaam" />
                     </MudItem>
                     <MudItem xs="3">
-                        <MudDatePicker Required="true" Editable="true" Mask="@(new DateMask("dd-MM-yyyy"))" HelperText="XX-XX-XXXX" HelperTextOnFocus="true" @bind-Date="student.BirthDate" For="(() => student.BirthDate)" DisableToolbar="true" Label="Geboortedatum" />
+                        <MudDatePicker Required="true" Editable="true" Mask="@(new DateMask("dd-MM-yyyy"))" HelperText="DD-MM-YYYY" HelperTextOnFocus="true" @bind-Date="student.BirthDate" For="(() => student.BirthDate)" DisableToolbar="true" Label="Geboortedatum" />
                     </MudItem>
                 </MudGrid>
 
@@ -120,7 +120,7 @@ else
 
                 <!-- Opmerkingen -->
                 <MudItem xs="12">
-                    <MudTextField T="string" Label="Opmerkingen" For="(() => student.Remarks)" Text="" Lines="3" />
+                    <MudTextField T="string" @bind-Value="student.Remarks" Label="Opmerkingen" For="(() => student.Remarks)" Lines="3" />
                 </MudItem>
             </MudCardContent>
 

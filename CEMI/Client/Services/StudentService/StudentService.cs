@@ -41,6 +41,8 @@ namespace CEMI.Client.Services.StudentService
             // IMPORTANT to store dates in UTC-format!
             student.BirthDate = student.BirthDate!.Value.ToUniversalTime();
 
+            // TODO: bool Enrolled should be set manually after payment is confirmed, so to be refactored...
+            student.Enrolled = true;
             await _supabase.From<StudentModel>().Insert(student);
             NavigateToOverview();
         }

@@ -34,7 +34,7 @@ namespace CEMI.Shared
     [Table("students")]
     public class StudentModel : BaseModel
     {
-        [PrimaryKey("id", true)]
+        [PrimaryKey("id", false)]
         public int Id { get; set; }
 
         [Column("classlevel")]
