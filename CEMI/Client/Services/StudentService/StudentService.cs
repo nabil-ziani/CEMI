@@ -4,13 +4,11 @@ namespace CEMI.Client.Services.StudentService
 {
     public class StudentService : IStudentService
     {
-        private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
         private readonly Supabase.Client _supabase;
 
-        public StudentService(HttpClient httpClient, NavigationManager navigationManager, Supabase.Client client)
+        public StudentService(NavigationManager navigationManager, Supabase.Client client)
         {
-            _httpClient = httpClient;
             _navigationManager = navigationManager;
             _supabase = client;
         }
@@ -40,8 +38,11 @@ namespace CEMI.Client.Services.StudentService
         // POST
         public async Task CreateStudent(StudentModel student)
         {
+            // IMPORTANT to store dates in UTC-format!
+            student.BirthDate = student.BirthDate!.Value.ToUniversalTime();
+
             await _supabase.From<StudentModel>().Insert(student);
-            await SetStudents();
+            NavigateToOverview();
         }
 
         // PUT
@@ -70,7 +71,7 @@ namespace CEMI.Client.Services.StudentService
             model.District = student.District;
 
             await model.Update<StudentModel>();
-            await SetStudents();
+            NavigateToOverview();
         }
 
         // DELETE
@@ -78,15 +79,12 @@ namespace CEMI.Client.Services.StudentService
         {
             await _supabase.From<StudentModel>().Where(x => x.Id == id).Delete();
 
-            await SetStudents();
+            NavigateToOverview();
         }
 
-        private async Task SetStudents()
+        private void NavigateToOverview()
         {
-            var result = await _supabase.From<StudentModel>().Get();
-            Students = result.Models;
-
-            _navigationManager.NavigateTo("students");
+            _navigationManager.NavigateTo("/students");
         }
     }
 }
