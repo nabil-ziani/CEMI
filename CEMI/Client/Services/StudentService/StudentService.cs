@@ -45,7 +45,7 @@ namespace CEMI.Client.Services.StudentService
                 LastName = student.LastName,
                 BirthDate = student.BirthDate!.Value.ToUniversalTime(),
                 ClassLevel = student.ClassLevel,
-                Enrolled = student.Enrolled,
+                Enrolled = true,
                 OldStudent = student.OldStudent,
                 Graduated = student.Graduated,
                 Phone_1 = student.Phone_1,
@@ -60,8 +60,6 @@ namespace CEMI.Client.Services.StudentService
                 Remarks = student.Remarks
             };
 
-            // TODO: bool Enrolled should be set manually after payment is confirmed, so to be refactored...
-            student.Enrolled = true;
             await _supabase.From<CreateStudent>().Insert(newStudent);
             NavigateToOverview();
         }
@@ -84,7 +82,7 @@ namespace CEMI.Client.Services.StudentService
             model.Email2 = student.Email2;
             model.HomeAlone = student.HomeAlone;
             model.Remarks = student.Remarks;
-            model.Enrolled = student.Enrolled;
+            model.Enrolled = true;
             model.Graduated = student.Graduated;
             model.Street = student.Street;
             model.HouseNumber = student.HouseNumber;

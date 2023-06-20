@@ -4,7 +4,6 @@
       "anonymousAuthentication": true,
       "iisExpress": {
         "applicationUrl": "http://localhost:40332",
-        "launchUrl": "students",
         "sslPort": 44311
       }
     },
@@ -15,7 +14,6 @@
         "launchBrowser": true,
         "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
         "applicationUrl": "https://localhost:7058;http://localhost:5039",
-        "launchUrl": "students",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
