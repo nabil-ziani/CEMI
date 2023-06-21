@@ -44,7 +44,7 @@ namespace CEMI.Client.Services.StudentService
                 FirstName = student.FirstName,
                 LastName = student.LastName,
                 BirthDate = student.BirthDate!.Value.ToUniversalTime(),
-                ClassLevel = student.ClassLevel,
+                ClassLevel = student.Level,
                 Enrolled = true,
                 OldStudent = student.OldStudent,
                 Graduated = student.Graduated,
@@ -74,7 +74,7 @@ namespace CEMI.Client.Services.StudentService
 
             model.FirstName = student.FirstName;
             model.LastName = student.LastName;
-            model.ClassLevel = student.ClassLevel;
+            model.Level = student.Level;
             model.BirthDate = student.BirthDate;
             model.Phone_1 = student.Phone_1;
             model.Phone_2 = student.Phone_2;

@@ -15,6 +15,7 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Klas 2022-2023</MudTh>
+        <MudTh>Docent</MudTh>
         <MudTh>Voornaam</MudTh>
         <MudTh>Familienaam</MudTh>
         <MudTh>Geboortedatum</MudTh>
@@ -23,7 +24,8 @@
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ClassLevel">@context.ClassLevel.GetDisplayName()</MudTd>
+        <MudTd DataLabel="Level">@context.Level.GetDisplayName()</MudTd>
+        <MudTd DataLabel="Class">@context.Class</MudTd>
         <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
         <MudTd DataLabel="LastName">@context.LastName</MudTd>
         <MudTd DataLabel="BirthDate">@(context.BirthDate != null ? context.BirthDate.Value.ToString("dd-MM-yyyy") : "")</MudTd>
@@ -55,7 +57,9 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (student.ClassLevel.GetDisplayName()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (student.Level.GetDisplayName()!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (student.Class!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (student.FirstName!.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;

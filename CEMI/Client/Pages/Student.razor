@@ -74,7 +74,7 @@ else
                 <!-- niveau, telefoon1, telefoon2 -->
                 <MudGrid Class="d-flex justify-space-between my-3">
                     <MudItem xs="3">
-                        <MudSelect Required="true" @bind-Value="student.ClassLevel" T="ClassLevel" Label="Klas 2022-2023" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelect Required="true" @bind-Value="student.Level" T="ClassLevel" Label="Klas 2022-2023" AnchorOrigin="Origin.BottomCenter">
                             @foreach (ClassLevel level in Enum.GetValues(typeof(ClassLevel)))
                             {
                                 <MudSelectItem T="ClassLevel" Value="@level">@level.GetDisplayName()</MudSelectItem>
@@ -158,11 +158,11 @@ else
 
         if (passed)
         {
-            student.ClassLevel = student.ClassLevel.Next();
+            student.Level = student.Level.Next();
         } 
         else
         {
-            student.ClassLevel = student.ClassLevel.Previous();
+            student.Level = student.Level.Previous();
         }
     }
 
@@ -170,7 +170,7 @@ else
     {
         if (Id == null)
         {
-            student.ClassLevel = ClassLevel.Tamhidi;
+            student.Level = ClassLevel.Tamhidi;
             if (SiblingId != null)
             {
                 var sibling = await studentService.GetSingleStudent((int)SiblingId);
@@ -248,7 +248,7 @@ else
                 .NotEmpty().WithMessage("Dit veld is verplicht")
                 .EmailAddress().WithMessage("Dit is geen geldig e-mailadres");
 
-            RuleFor(x => x.ClassLevel.ToString())
+            RuleFor(x => x.Level.ToString())
                 .NotEmpty().WithMessage("Dit veld is verplicht.");
 
             RuleFor(x => x.Street)

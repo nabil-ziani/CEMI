@@ -40,8 +40,11 @@ namespace CEMI.Shared
         [PrimaryKey("id", false)]
         public int Id { get; set; }
 
-        [Column("classlevel")]
-        public ClassLevel ClassLevel { get; set; }
+        [Column("class")]
+        public string? Class { get; set; }
+
+        [Column("level")]
+        public ClassLevel Level { get; set; }
 
         [Column("firstname")]
         public string? FirstName { get; set; } = string.Empty;

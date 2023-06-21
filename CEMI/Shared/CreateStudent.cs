@@ -6,7 +6,7 @@ namespace CEMI.Shared
     [Table("students")]
     public class CreateStudent : BaseModel
     {
-        [Column("classlevel")]
+        [Column("level")]
         public ClassLevel ClassLevel { get; set; }
 
         [Column("firstname")]
