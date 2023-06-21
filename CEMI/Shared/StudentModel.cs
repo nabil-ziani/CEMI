@@ -15,8 +15,11 @@ namespace CEMI.Shared
         [Display(Name = "Niveau 2")]
         LevelTwo,
 
-        [Display(Name = "Niveau 3")]
+        [Display(Name = "Niveau 3 (deel 1)")]
         LevelThree,
+
+        [Display(Name = "Niveau 3 (deel 2)")]
+        LevelThreePartTwo,
 
         [Display(Name = "Niveau 4 (deel 1)")]
         LevelFour,
