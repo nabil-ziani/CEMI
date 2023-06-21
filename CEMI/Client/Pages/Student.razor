@@ -127,10 +127,10 @@ else
         </MudForm>
         <MudCardActions>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 mx-3" OnClick="@(async () => await Submit())">@btnText</MudButton>
-            @if (Id != null)
+            @*@if (Id != null)
             {
                 <MudButton Variant="Variant.Filled" Color="Color.Error" Class="my-3" OnClick="@(async () => await DeleteStudent())">Verwijder</MudButton>
-            }
+            }*@
         </MudCardActions>
     </MudCard>
 </MudContainer>
@@ -213,13 +213,13 @@ else
         }
     }
 
-    async Task DeleteStudent()
-    {
-        bool? result = await DialogService.ShowMessageBox("Opgelet!", "Verwijderen kan niet ongedaan gemaakt worden!", yesText: "Verwijder", cancelText: "Annuleer");
-        StateHasChanged();
+    //async Task DeleteStudent()
+    //{
+    //    bool? result = await DialogService.ShowMessageBox("Opgelet!", "Verwijderen kan niet ongedaan gemaakt worden!", yesText: "Verwijder", cancelText: "Annuleer");
+    //    StateHasChanged();
 
-        await studentService.DeleteStudent(student.Id);
-    }
+    //    await studentService.DeleteStudent(student.Id);
+    //}
 
     // Validation
     StudentModelFluentValidator studentValidator = new StudentModelFluentValidator();
