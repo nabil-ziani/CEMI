@@ -25,9 +25,7 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
                 </div>
             </MudMenu>
-        </MudHidden>
-        
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+        </MudHidden>        
     </MudAppBar>
 
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
@@ -62,7 +60,7 @@
     {
         if (_currentTheme == _defaultTheme)
         {
-            _currentTheme = _lightTheme;
+            _currentTheme = _darkTheme;
         }
         else
         {
@@ -75,18 +73,18 @@
     private readonly MudTheme _defaultTheme =
         new MudTheme()
             {
-                Palette = new PaletteDark()
-                {
-                    Primary = "#ce8f59"
-                }
-            };
-
-    private readonly MudTheme _lightTheme =
-        new MudTheme()
-            {
                 Palette = new PaletteLight()
                 {
                     Primary = "#e18438"
+                }
+            };
+
+    private readonly MudTheme _darkTheme =
+        new MudTheme()
+            {
+                Palette = new PaletteDark()
+                {
+                    Primary = "#ce8f59"
                 }
             };
     #endregion
