@@ -45,15 +45,18 @@ else
                 {
                     <MudGrid>
                         <MudItem>
-                            <MudAlert Severity="MudBlazor.Severity.Info" Variant="Variant.Filled">Gelieve aan te geven of @student.FirstName geslaagd is:</MudAlert>
-                        </MudItem>
-                        <MudItem Class="d-flex align-center">
-                            <MudSwitch Checked="student.Graduated"
-                                       CheckedChanged="(bool result) => OngraduationResult(student, result)"
-                                       ThumbIcon="@(student.Graduated == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
-                                       ThumbIconColor="@(student.Graduated == true ? Color.Success : Color.Error)">
-                                Geslaagd
-                            </MudSwitch>
+                            <MudAlert Severity="MudBlazor.Severity.Info" Variant="Variant.Filled" NoIcon="true">
+                                Gelieve aan te geven of @student.FirstName geslaagd is:
+                                <MudItem Class="ml-5 d-inline-flex align-center">
+                                    <MudSwitch Checked="student.Graduated"
+                                               Size="Size.Medium"
+                                               CheckedChanged="(bool result) => OngraduationResult(student, result)"
+                                               ThumbIcon="@(student.Graduated == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                               ThumbIconColor="@(student.Graduated == true ? Color.Success : Color.Error)">
+                                        <MudText>Geslaagd</MudText>
+                                    </MudSwitch>
+                                </MudItem>
+                            </MudAlert>
                         </MudItem>
                     </MudGrid>
                 }
@@ -74,7 +77,7 @@ else
                 <!-- niveau, telefoon1, telefoon2 -->
                 <MudGrid Class="d-flex justify-space-between my-3">
                     <MudItem xs="3">
-                        <MudSelect Required="true" @bind-Value="student.Level" T="ClassLevel" Label="Klas 2022-2023" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelect Required="true" @bind-Value="student.Level" T="ClassLevel" Label="Klas" AnchorOrigin="Origin.BottomCenter">
                             @foreach (ClassLevel level in Enum.GetValues(typeof(ClassLevel)))
                             {
                                 <MudSelectItem T="ClassLevel" Value="@level">@level.GetDisplayName()</MudSelectItem>
