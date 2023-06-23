@@ -26,6 +26,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddSingleton(provider => new Client(url, key, options));
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
-builder.Services.AddTransient<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 await builder.Build().RunAsync();
