@@ -75,7 +75,7 @@ namespace CEMI.Client.Services.StudentService
             model.FirstName = student.FirstName;
             model.LastName = student.LastName;
             model.Level = student.Level;
-            model.BirthDate = student.BirthDate;
+            model.BirthDate = student.BirthDate!.Value.ToUniversalTime();
             model.Phone_1 = student.Phone_1;
             model.Phone_2 = student.Phone_2;
             model.Email1 = student.Email1;
